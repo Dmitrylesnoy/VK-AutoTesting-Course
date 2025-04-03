@@ -13,7 +13,6 @@ public class OpenMessagePageTest {
   @BeforeEach
   public void setUp() {
     browser = "chrome";
-    browserSize = "1125x1032";
     mainPage = new MainPage();
   }
 

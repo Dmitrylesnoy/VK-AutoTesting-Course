@@ -21,7 +21,6 @@ public class RedirectPageTest {
     }
 
     @Test
-    @DisplayName("Проверка перехода с ok.ru/search/profiles на vk.company/ru/projects")
     public void shouldNavigateToVkProjects() {
         searchPage.open()
                 .acceptCookiesIfPresent() // Закрываем баннер с куки, если он есть
@@ -30,9 +29,9 @@ public class RedirectPageTest {
 
         // Ожидаем, пока URL обновится
         String currentUrl = searchPage.getCurrentUrl();
-        String expectedUrl = "https://ok.ru/search/profiles";
+        String expectedUrl = "https://vk.company/ru/projects/";
 
-        assertNotEquals(expectedUrl, currentUrl,
+        assertEquals(expectedUrl, currentUrl,
                 "После нажатия кнопок должен произойти переход на " + expectedUrl);
     }
 }
