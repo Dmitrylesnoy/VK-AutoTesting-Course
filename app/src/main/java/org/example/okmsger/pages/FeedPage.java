@@ -1,6 +1,5 @@
 package org.example.okmsger.pages;
 
-import static com.codeborne.selenide.Condition.*;
 import static com.codeborne.selenide.Selectors.*;
 import static com.codeborne.selenide.Selenide.*;
 
@@ -8,18 +7,12 @@ import com.codeborne.selenide.Selenide;
 import com.codeborne.selenide.SelenideElement;
 
 public class FeedPage implements Page{
-    private final SelenideElement logo = $(byXpath("//*[@id=\"topPanelLeftCorner\"]"));
-    private final SelenideElement messagesButton = $(byXpath("//*[@id=\"hook_ToolbarIconDiscussions_ToolbarDiscussions\"]"));
-    private final SelenideElement chatWindow = $(byXpath("//*[@id=\"topPanelPopup_d\"]/div[2]/div/div[1]"));
-    private final String url = "https://ok.ru/feed/";
+    private final SelenideElement messagesButton = $(byXpath("//li[@data-l='t,discussions']/button"));
+    private final SelenideElement chatWindow = $(byXpath("//*[@class='dialogWrapper']"));
+    private final String URL = "https://ok.ru/feed/";
 
     public FeedPage open() {
-        Selenide.open(url);
-        return this;
-    }
-
-    public FeedPage clickLogo() {
-        logo.click();
+        Selenide.open(URL);
         return this;
     }
 
@@ -33,6 +26,6 @@ public class FeedPage implements Page{
     }
 
     public String getUrl() {
-        return url;
+        return URL;
     }
 }

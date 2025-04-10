@@ -6,16 +6,16 @@ import com.codeborne.selenide.SelenideElement;
 import static com.codeborne.selenide.Selectors.*;
 import static com.codeborne.selenide.Selenide.$;
 
-public class SearchPage {
-    private final SelenideElement searchField = $(byXpath("//*[@id=\"hook_Block_SearchMRB\"]/anonym-users-search/div/div[1]/div[1]/div/div/div/label/input"));
-    private final SelenideElement searchButton = $("button[type='submit']");
-    private final SelenideElement resultsCountElement = $(byXpath("//*[@id=\"hook_Block_SearchMRB\"]/anonym-users-search/div/div[1]/div[2]/div/h2/span"));
+public class SearchPage implements Page{
+    private final SelenideElement searchField = $(byXpath("//input[@type='search']"));
+    private final SelenideElement searchButton = $(byXpath("//button[@type='submit']"));
+    private final SelenideElement resultsCountElement = $(byXpath("//span[@class='counter__2bnlu']"));
     private final SelenideElement firstButton = $(byXpath("//button[@aria-label='Сервисы VK']"));
     private final SelenideElement secondButton = $(byXpath("//a[contains(@href, 'vk.company/ru/projects')]"));
-    private final String url = "https://ok.ru/search/profiles";
+    private final String URL = "https://ok.ru/search/profiles";
 
     public SearchPage open() {
-        Selenide.open(url);
+        Selenide.open(URL);
         return this;
     }
 
@@ -45,5 +45,9 @@ public class SearchPage {
     public SearchPage clickSecondButton() {
         secondButton.click();
         return this;
+    }
+
+    public String getUrl() {
+        return URL;
     }
 }
