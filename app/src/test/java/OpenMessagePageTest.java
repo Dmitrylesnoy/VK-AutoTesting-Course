@@ -24,7 +24,8 @@ public class OpenMessagePageTest {
     browser = "chrome";
     feedPage = new FeedPage();
     Loginner loginer = new Loginner();
-    // name=
+    name = System.getenv("OK_NAME");
+    name = System.getenv("OK_PASSWORD");
     loginer.login(name,password);
   }
 
