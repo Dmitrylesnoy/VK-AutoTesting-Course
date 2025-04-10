@@ -1,12 +1,15 @@
+import static com.codeborne.selenide.Configuration.*;
+import static org.junit.jupiter.api.Assertions.*;
+
+import org.example.okmsger.pages.SearchPage;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.Tag;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 
-import static com.codeborne.selenide.Configuration.*;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-
-import org.example.okmsger.SearchPage;
-
+@Tag("search")
+@DisplayName("User Search Tests")
 public class SearchUsersTest {
     private SearchPage searchPage;
 
@@ -16,14 +19,16 @@ public class SearchUsersTest {
         searchPage = new SearchPage();
     }
 
-    @Test
-    @DisplayName("Проверка, что поиск 'Иван Иванов' возвращает больше 0 результатов")
-    public void testSearchUserByName() {
+
+    @ParameterizedTest
+    @ValueSource(strings = {"Иван Иванов", "Петр Петров", "Сергей Сергеев"})
+    @DisplayName("Parameterized user search test")
+    public void testSearchUsersWithDifferentQueries(String query) {
         searchPage.open();
-        searchPage.enterSearchQuery("Иван Иванов");
+        searchPage.enterSearchQuery(query);
         searchPage.clickSearchButton();
 
         assertTrue(searchPage.getResultsCount() > 0,
-                "Поиск 'Иван Иванов' должен вернуть больше 0 результатов");
+                "Search should return more than 0 results for query: " + query);
     }
 }
