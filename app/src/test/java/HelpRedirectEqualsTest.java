@@ -2,6 +2,7 @@ import static com.codeborne.selenide.Selenide.*;
 import static org.junit.jupiter.api.Assertions.*;
 
 import java.time.Duration;
+import java.util.logging.Logger;
 
 import org.example.okmsger.pages.HelpPage;
 import org.example.okmsger.pages.MainPage;
@@ -13,6 +14,7 @@ import static com.codeborne.selenide.WebDriverConditions.*;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class HelpRedirectEqualsTest {
+    private static final Logger logger = Logger.getLogger(HelpRedirectEqualsTest.class.getName());
     private MainPage mainPage;
     private RecoveryPage recoveryPage;
     private HelpPage helpPage;
@@ -32,23 +34,24 @@ public class HelpRedirectEqualsTest {
     }
 
     @Test
+    @Tag("Navigation")
     public void testRecoveryToHelp() {
         assertTrue(mainPage.isHaveHelpButton());
-        System.out.println("Main login page oppened");
+        logger.info("Main login page opened");
 
         mainPage.clickForgotButton();
         webdriver().shouldHave(urlContaining(recoveryPage.getUrl()));
-        System.out.println("Redirect to recovery page succes");
+        logger.info("Redirect to recovery page success");
 
         recoveryPage.clickHelpButton();
-        System.out.println("Help button clicked");
+        logger.info("Help button clicked");
         webdriver().shouldHave(url(helpPage.getUrl()), Duration.ofSeconds(5));
     }
 
     @Test
     public void testDownHelpEquals() {
         mainPage.clickHelpButton();
-        System.out.println("Help button clicked");
+        logger.info("Help button clicked");
 
         webdriver().shouldHave(url(helpPage.getUrl()), Duration.ofSeconds(5));
     }

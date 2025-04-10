@@ -1,46 +1,47 @@
 import static com.codeborne.selenide.Condition.*;
-import static com.codeborne.selenide.Configuration.*;
 import static com.codeborne.selenide.Selenide.*;
-import static org.junit.jupiter.api.Assertions.*;
 
+import java.util.logging.Logger;
 import org.example.okmsger.pages.FeedPage;
 import org.example.okmsger.utils.Loginner;
-import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
-@Tag("messaging")
-@DisplayName("Message Page Tests")
+import com.codeborne.selenide.Configuration;
+
 public class OpenMessagePageTest {
+  private static final Logger logger = Logger.getLogger(OpenMessagePageTest.class.getName());
   private FeedPage feedPage;
   private String name, password;
+  private Loginner loginner;
 
   @BeforeEach
   public void setUp() {
-    browser = "chrome";
+    Configuration.browser = "chrome";
     feedPage = new FeedPage();
-    Loginner loginer = new Loginner();
+    loginner = new Loginner();
     name = System.getenv("OK_NAME");
-    name = System.getenv("OK_PASSWORD");
-    loginer.login(name,password);
+    password = System.getenv("OK_PASSWORD");
+    loginner.login(name, password);
+    logger.info("Succesfully log in");
   }
 
     @Test
+    @Tag("Messaging")
     @DisplayName("Test opening message page")
     public void openMessagePage() {
-      feedPage.open()
-          .clickLogo()
-          .clickMessagesButton();
+      feedPage.open().clickMessagesButton();
+      logger.info("Message button clicked");
       feedPage.getChatWindow().should(be(visible));
     }
   
     @AfterEach
     public void tearDown() {
-      // Loginner.logout();
+      loginner.logout();
       closeWebDriver();
     }
+    
 }

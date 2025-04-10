@@ -7,9 +7,9 @@ import com.codeborne.selenide.Selenide;
 
 import static com.codeborne.selenide.Selectors.*;
 
-public class RecoveryPage {
-    private final SelenideElement upperHelpButton = $(byXpath("//*[@id=\"hook_Block_Header\"]/div/div/div/div[2]/div[2]/a"));
-    private final String url = "https://ok.ru/dk?st.cmd=anonymRecoveryStart"; 
+public class RecoveryPage implements Page {
+    private final SelenideElement upperHelpButton = $(byXpath("//a[text()='Помощь' and @class='anon-tb-link']"));
+   private final String url = "https://ok.ru/dk?st.cmd=anonymRecoveryStart"; 
 
     public boolean isHaveHelpButton() {
         return upperHelpButton.isDisplayed();
