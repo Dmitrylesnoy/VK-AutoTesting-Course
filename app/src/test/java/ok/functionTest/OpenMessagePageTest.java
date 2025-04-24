@@ -1,7 +1,6 @@
+package ok.functionTest;
 import static com.codeborne.selenide.Condition.*;
-import static com.codeborne.selenide.Selenide.*;
 
-import java.util.logging.Logger;
 import org.example.okmsger.pages.FeedPage;
 import org.example.okmsger.utils.Loginner;
 import org.junit.jupiter.api.AfterEach;
@@ -10,19 +9,17 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
-import com.codeborne.selenide.Configuration;
+import ok.BaseTest;
 
-public class OpenMessagePageTest {
-  private static final Logger logger = Logger.getLogger(OpenMessagePageTest.class.getName());
+public class OpenMessagePageTest extends BaseTest{
   private FeedPage feedPage;
   private String name, password;
-  private Loginner loginner;
+  private Loginner loginner = new Loginner();;
 
   @BeforeEach
-  public void setUp() {
-    Configuration.browser = "chrome";
+  public void pages() {
     feedPage = new FeedPage();
-    loginner = new Loginner();
+    // loginner = new Loginner();
     name = System.getenv("OK_NAME");
     password = System.getenv("OK_PASSWORD");
     loginner.login(name, password);
@@ -39,9 +36,9 @@ public class OpenMessagePageTest {
     }
   
     @AfterEach
-    public void tearDown() {
-      loginner.logout();
-      closeWebDriver();
+    public void logout() {
+        loginner.logout();
+        // closeWebDriver();
     }
     
 }

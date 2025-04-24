@@ -1,7 +1,11 @@
 package org.example.okmsger.pages;
 
-public interface Page {
-    public String getUrl();
+import java.util.logging.Logger;
 
-    public Page open();
+public abstract class Page {
+    protected static final Logger logger = Logger.getLogger(MainPage.class.getName());
+
+    public abstract String getUrl();
+
+    public abstract Page open();
 }

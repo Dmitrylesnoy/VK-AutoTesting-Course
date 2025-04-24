@@ -1,10 +1,15 @@
 package org.example.okmsger.utils;
 
 import com.codeborne.selenide.Selenide;
+
+import java.util.logging.Logger;
+
 import org.example.okmsger.pages.MainPage;
 
 public class Loginner {
     private final MainPage mainPage;
+    private static final Logger logger = Logger.getLogger(MainPage.class.getName());
+
 
     public Loginner() {
         mainPage = new MainPage();
@@ -13,25 +18,31 @@ public class Loginner {
     
     public boolean login(String email, String password) {
         try {
+            logger.info("Attempting login with email: " + email);
             mainPage.setEmail(email)
                     .setPassword(password)
                     .loginClick();
-            Selenide.Wait().until(driver -> !driver.getCurrentUrl().contains(mainPage.getUrl()));
+            Selenide.Wait().until(driver -> driver.getCurrentUrl().contains(mainPage.getUrl()));
+            mainPage.validatePostLoginElements();
+            logger.info("Login successful, redirected to feed page");
             return true;
         } catch (Exception e) {
-            System.err.println("Login failed: " + e.getMessage());
+            logger.severe("Login failed: " + e.getMessage());
+            logger.severe("Current URL: " + Selenide.webdriver().driver().getCurrentFrameUrl());
             return false;
         }
     }
     
     public boolean logout() {
         try {
+            logger.info("Attempting logout");
             mainPage.profileClick()
-                .logoutClick();
+                    .logoutClick();
             Selenide.Wait().until(driver -> driver.getCurrentUrl().contains(mainPage.getUrl()));
+            logger.info("Logout successful");
             return true;
         } catch (Exception e) {
-            System.err.println("Logout failed: " + e.getMessage());
+            logger.severe("Logout failed: " + e.getMessage());
             return false;
         }
     }

@@ -20,8 +20,7 @@ dependencies {
     testImplementation libs.junit.jupiter
 
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
-
-    // This dependency is used by the application.
+    testImplementation 'org.junit.jupiter:junit-jupiter:5.9.3'
     implementation libs.guava
     implementation libs.selenide  // Matches the "selenide" alias in TOML
 }

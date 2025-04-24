@@ -1,28 +1,26 @@
-package NavigationTest;
+package ok.navigationTest;
 import static com.codeborne.selenide.Selenide.*;
 import static org.junit.jupiter.api.Assertions.*;
 
 import java.time.Duration;
-import java.util.logging.Logger;
-
 import org.example.okmsger.pages.HelpPage;
 import org.example.okmsger.pages.MainPage;
 import org.example.okmsger.pages.RecoveryPage;
 import org.junit.jupiter.api.*;
 
-import com.codeborne.selenide.Configuration;
+import ok.BaseTest;
+
 import static com.codeborne.selenide.WebDriverConditions.*;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-public class HelpRedirectEqualsTest {
-    private static final Logger logger = Logger.getLogger(HelpRedirectEqualsTest.class.getName());
+public class HelpRedirectEqualsTest extends BaseTest{
     private MainPage mainPage;
     private RecoveryPage recoveryPage;
     private HelpPage helpPage;
 
     @BeforeAll
-    public void setUp() {
-        Configuration.browser = "chrome";
+    public void pages() {
+        // Configuration.browser = "chrome";
         mainPage = new MainPage();
         recoveryPage = new RecoveryPage();
         helpPage = new HelpPage();
@@ -55,10 +53,5 @@ public class HelpRedirectEqualsTest {
         logger.info("Help button clicked");
 
         webdriver().shouldHave(url(helpPage.getUrl()), Duration.ofSeconds(5));
-    }
-
-    @AfterAll
-    public void tearDown() {
-        closeWebDriver();
     }
 }
