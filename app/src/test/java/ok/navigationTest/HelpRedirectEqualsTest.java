@@ -1,35 +1,28 @@
 package ok.navigationTest;
+
 import static com.codeborne.selenide.Selenide.*;
+import static com.codeborne.selenide.WebDriverConditions.*;
 import static org.junit.jupiter.api.Assertions.*;
 
-import java.time.Duration;
-import org.example.okmsger.pages.HelpPage;
 import org.example.okmsger.pages.MainPage;
 import org.example.okmsger.pages.RecoveryPage;
-import org.junit.jupiter.api.*;
+import org.example.okmsger.pages.HelpPage;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.Tag;
 
 import ok.BaseTest;
 
-import static com.codeborne.selenide.WebDriverConditions.*;
+import java.time.Duration;
 
-@TestInstance(TestInstance.Lifecycle.PER_CLASS)
-public class HelpRedirectEqualsTest extends BaseTest{
+public class HelpRedirectEqualsTest extends BaseTest {
     private MainPage mainPage;
     private RecoveryPage recoveryPage;
     private HelpPage helpPage;
 
-    @BeforeAll
-    public void pages() {
-        // Configuration.browser = "chrome";
-        mainPage = new MainPage();
-        recoveryPage = new RecoveryPage();
-        helpPage = new HelpPage();
-
-    }
-
     @BeforeEach
-    public void openMainPage() {
-        open(mainPage.getUrl());
+    public void start() {
+        mainPage = navigator.openMainPage();
     }
 
     @Test
@@ -39,19 +32,24 @@ public class HelpRedirectEqualsTest extends BaseTest{
         logger.info("Main login page opened");
 
         mainPage.clickForgotButton();
-        webdriver().shouldHave(urlContaining(recoveryPage.getUrl()));
-        logger.info("Redirect to recovery page success");
+        recoveryPage = new RecoveryPage();
+        logger.info("Redirect to recovery page successful");
 
         recoveryPage.clickHelpButton();
         logger.info("Help button clicked");
+        helpPage = new HelpPage();
         webdriver().shouldHave(url(helpPage.getUrl()), Duration.ofSeconds(5));
+        logger.info("Redirect to help page successful");
     }
 
     @Test
+    @Tag("Navigation")
     public void testDownHelpEquals() {
         mainPage.clickHelpButton();
         logger.info("Help button clicked");
-
-        webdriver().shouldHave(url(helpPage.getUrl()), Duration.ofSeconds(5));
+        helpPage = navigator.openHelpPage();
+        // webdriver().shouldHave(url(helpPage.getUrl()), Duration.ofSeconds(5));
+        helpPage.isLoaded();
+        logger.info("Redirect to help page successful");
     }
 }

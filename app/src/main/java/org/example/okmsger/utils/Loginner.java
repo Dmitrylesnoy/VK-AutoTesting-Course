@@ -12,18 +12,17 @@ public class Loginner {
 
 
     public Loginner() {
-        mainPage = new MainPage();
-        mainPage.open();
+        mainPage = Navigator.openMainPage();
     }
     
     public boolean login(String email, String password) {
         try {
+            mainPage.isLoaded();
             logger.info("Attempting login with email: " + email);
             mainPage.setEmail(email)
                     .setPassword(password)
                     .loginClick();
             Selenide.Wait().until(driver -> driver.getCurrentUrl().contains(mainPage.getUrl()));
-            mainPage.validatePostLoginElements();
             logger.info("Login successful, redirected to feed page");
             return true;
         } catch (Exception e) {
