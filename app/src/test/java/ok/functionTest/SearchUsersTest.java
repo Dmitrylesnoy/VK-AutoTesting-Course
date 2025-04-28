@@ -18,7 +18,7 @@ public class SearchUsersTest extends BaseTest {
 
     @BeforeEach
     public void start() {
-        searchPage = navigator.openSearchPage();
+        searchPage = new SearchPage();
     }
 
     @Nested
@@ -31,9 +31,7 @@ public class SearchUsersTest extends BaseTest {
         @DisplayName("Search users with button click")
         public void testSearchUsersWithButton(String query) {
             searchPage.enterSearchQuery(query);
-            logger.info("Entered search query: " + query);
             searchPage.clickSearchButton();
-            logger.info("Clicked search button");
             assertTrue(searchPage.getResultsCount() > 0,
                     "Search should return more than 0 results for query: " + query);
         }
@@ -48,9 +46,7 @@ public class SearchUsersTest extends BaseTest {
         @DisplayName("Search users with Enter and expected minimum results")
         public void testSearchUsersWithEnter(String query, int minResults) {
             searchPage.enterSearchQuery(query);
-            logger.info("Entered search query: " + query);
             searchPage.submitSearchWithEnter();
-            logger.info("Submitted search with Enter");
             assertTrue(searchPage.getResultsCount() >= minResults,
                     "Search should return at least " + minResults + " results for query: " + query);
         }

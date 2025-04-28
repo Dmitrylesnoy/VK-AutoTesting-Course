@@ -1,28 +1,26 @@
 package org.example.okmsger.utils;
 
 import com.codeborne.selenide.Selenide;
-
-import java.util.logging.Logger;
-
 import org.example.okmsger.pages.MainPage;
+import java.util.logging.Logger;
 
 public class Loginner {
     private final MainPage mainPage;
-    private static final Logger logger = Logger.getLogger(MainPage.class.getName());
-
+    private static final Logger logger = Logger.getLogger(Loginner.class.getName());
 
     public Loginner() {
-        mainPage = Navigator.openMainPage();
+        mainPage = (MainPage)PageFactory.createPage(MainPage.class);
+        mainPage.open();
     }
-    
-    public boolean login(String email, String password) {
+
+    public boolean login(UserCredentials credentials) {
         try {
-            mainPage.isLoaded();
-            logger.info("Attempting login with email: " + email);
-            mainPage.setEmail(email)
-                    .setPassword(password)
+            logger.info("Attempting login with email: " + credentials.getEmail());
+            mainPage.setEmail(credentials.getEmail())
+                    .setPassword(credentials.getPassword())
                     .loginClick();
             Selenide.Wait().until(driver -> driver.getCurrentUrl().contains(mainPage.getUrl()));
+            mainPage.validatePostLoginElements();
             logger.info("Login successful, redirected to feed page");
             return true;
         } catch (Exception e) {
@@ -31,7 +29,7 @@ public class Loginner {
             return false;
         }
     }
-    
+
     public boolean logout() {
         try {
             logger.info("Attempting logout");

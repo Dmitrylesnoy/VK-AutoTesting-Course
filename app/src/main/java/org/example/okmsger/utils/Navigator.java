@@ -1,38 +1,24 @@
 package org.example.okmsger.utils;
 
-import org.example.okmsger.pages.MainPage;
-import org.example.okmsger.pages.RecoveryPage;
-import org.example.okmsger.pages.SearchPage;
-import org.example.okmsger.pages.FeedPage;
-import org.example.okmsger.pages.HelpPage;
+import static com.codeborne.selenide.Selenide.*;
+import static com.codeborne.selenide.WebDriverConditions.*;
 
+import java.time.Duration;
 import java.util.logging.Logger;
 
+import com.codeborne.selenide.Selenide;
 public class Navigator {
     private static final Logger logger = Logger.getLogger(Navigator.class.getName());
 
-    public static MainPage openMainPage() {
-        logger.info("Navigating to MainPage");
-        return new MainPage().open();
+    public static void openUrl(String URL) {
+        Selenide.open(URL);
+        checkUrl(URL);
+        logger.info("Opened url: " + URL);
     }
 
-    public static RecoveryPage openRecoveryPage() {
-        logger.info("Navigating to RecoveryPage");
-        return new RecoveryPage().open();
-    }
-
-    public static SearchPage openSearchPage() {
-        logger.info("Navigating to SearchPage");
-        return new SearchPage().open();
-    }
-
-    public static FeedPage openFeedPage() {
-        logger.info("Navigating to FeedPage");
-        return new FeedPage().open();
-    }
-
-    public static HelpPage openHelpPage() {
-        logger.info("Navigating to HelpPage");
-        return new HelpPage().open();
+    public static boolean checkUrl(String URL) {
+        webdriver().shouldHave(url(URL), Duration.ofSeconds(5));
+        return true;
+        // return WebDriverRunner.url().contains(URL);
     }
 }

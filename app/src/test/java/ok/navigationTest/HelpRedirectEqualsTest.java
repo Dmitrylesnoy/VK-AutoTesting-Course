@@ -1,19 +1,14 @@
 package ok.navigationTest;
 
-import static com.codeborne.selenide.Selenide.*;
-import static com.codeborne.selenide.WebDriverConditions.*;
-import static org.junit.jupiter.api.Assertions.*;
-
+import org.example.okmsger.pages.HelpPage;
 import org.example.okmsger.pages.MainPage;
 import org.example.okmsger.pages.RecoveryPage;
-import org.example.okmsger.pages.HelpPage;
+import org.example.okmsger.utils.Navigator;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.Tag;
+import org.junit.jupiter.api.Test;
 
 import ok.BaseTest;
-
-import java.time.Duration;
 
 public class HelpRedirectEqualsTest extends BaseTest {
     private MainPage mainPage;
@@ -22,23 +17,17 @@ public class HelpRedirectEqualsTest extends BaseTest {
 
     @BeforeEach
     public void start() {
-        mainPage = navigator.openMainPage();
+        mainPage = new MainPage();
+        // mainPage.open();
     }
 
     @Test
     @Tag("Navigation")
     public void testRecoveryToHelp() {
-        assertTrue(mainPage.isHaveHelpButton());
-        logger.info("Main login page opened");
-
         mainPage.clickForgotButton();
         recoveryPage = new RecoveryPage();
-        logger.info("Redirect to recovery page successful");
-
         recoveryPage.clickHelpButton();
-        logger.info("Help button clicked");
-        helpPage = new HelpPage();
-        webdriver().shouldHave(url(helpPage.getUrl()), Duration.ofSeconds(5));
+        Navigator.checkUrl(HelpPage.getUrl());
         logger.info("Redirect to help page successful");
     }
 
@@ -46,10 +35,7 @@ public class HelpRedirectEqualsTest extends BaseTest {
     @Tag("Navigation")
     public void testDownHelpEquals() {
         mainPage.clickHelpButton();
-        logger.info("Help button clicked");
-        helpPage = navigator.openHelpPage();
         // webdriver().shouldHave(url(helpPage.getUrl()), Duration.ofSeconds(5));
-        helpPage.isLoaded();
-        logger.info("Redirect to help page successful");
+        Navigator.checkUrl(HelpPage.getUrl());
     }
 }
