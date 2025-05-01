@@ -12,7 +12,7 @@ public class SearchPage extends Page {
     private static final By resultsCountElement = By.xpath("//span[@class='counter__2bnlu']");
     private static final By firstButton = By.xpath("//button[@aria-label='Сервисы VK']");
     private static final By secondButton = By.xpath("//a[contains(@href, 'vk.company/ru/projects')]");
-    private static final String URL = "https://ok.ru/search/profiles";
+    protected static String URL = "https://ok.ru/search/profiles";
 
     public SearchPage enterSearchQuery(String query) {
         new WebElementWrapper(searchField,"Search input").setValue(query);

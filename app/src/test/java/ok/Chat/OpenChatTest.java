@@ -5,7 +5,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
-
 import ok.Login.LoginTest;
 
 public class OpenChatTest extends LoginTest {
@@ -14,6 +13,9 @@ public class OpenChatTest extends LoginTest {
     @BeforeEach
     public void setUpChat() {
         feedPage = new FeedPage();
+        // Page page = PageFactory.createCurrentPage(Navigator.getUrl());
+        // assertEquals(FeedPage.class, page.getClass());
+        // feedPage = (FeedPage) page;
     }
 
     @Test

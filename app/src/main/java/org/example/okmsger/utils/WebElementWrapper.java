@@ -5,6 +5,7 @@ import com.codeborne.selenide.SelenideElement;
 import org.openqa.selenium.By;
 import java.util.logging.Logger;
 
+
 import static com.codeborne.selenide.Selenide.$;
 
 public class WebElementWrapper {

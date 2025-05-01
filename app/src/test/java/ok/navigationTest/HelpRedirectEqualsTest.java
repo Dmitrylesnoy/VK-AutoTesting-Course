@@ -13,7 +13,6 @@ import ok.BaseTest;
 public class HelpRedirectEqualsTest extends BaseTest {
     private MainPage mainPage;
     private RecoveryPage recoveryPage;
-    private HelpPage helpPage;
 
     @BeforeEach
     public void start() {

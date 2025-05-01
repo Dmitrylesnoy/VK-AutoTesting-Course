@@ -12,8 +12,7 @@ public class LoginTest extends BaseTest {
     @BeforeEach
     public void start() {
         loginner = new Loginner();
-        credentials = new UserCredentials(System.getenv("OK_NAME"), System.getenv("OK_PASSWORD"));
-        loginner.login(credentials);
+        loginner.login();
         logger.info("Successfully logged in");
     }
 }

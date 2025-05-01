@@ -5,16 +5,20 @@ import org.example.okmsger.pages.MainPage;
 import java.util.logging.Logger;
 
 public class Loginner {
-    private final MainPage mainPage;
+    private static final MainPage mainPage = new MainPage();
     private static final Logger logger = Logger.getLogger(Loginner.class.getName());
 
     public Loginner() {
-        mainPage = (MainPage)PageFactory.createPage(MainPage.class);
-        mainPage.open();
+        // mainPage = new MainPage();
+    }
+
+    public boolean login() {
+        return login(new UserCredentials(System.getenv("OK_NAME"), System.getenv("OK_PASSWORD")));
     }
 
     public boolean login(UserCredentials credentials) {
         try {
+            mainPage.open();
             logger.info("Attempting login with email: " + credentials.getEmail());
             mainPage.setEmail(credentials.getEmail())
                     .setPassword(credentials.getPassword())
@@ -32,6 +36,7 @@ public class Loginner {
 
     public boolean logout() {
         try {
+            mainPage.open();
             logger.info("Attempting logout");
             mainPage.profileClick()
                     .logoutClick();
