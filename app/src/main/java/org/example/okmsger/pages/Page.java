@@ -1,7 +1,36 @@
 package org.example.okmsger.pages;
 
-public interface Page {
-    public String getUrl();
+import java.util.logging.Logger;
 
-    public Page open();
+import org.example.okmsger.utils.Navigator;
+
+public abstract class Page {
+    protected static final Logger logger = Logger.getLogger(Page.class.getName());
+
+    protected static String URL = "https://ok.ru/";
+
+    public Page() {
+        open();
+        // if (!Navigator.checkUrl(URL))
+        // open();
+    }
+
+    public static String getUrl() {
+        return URL;
+    }
+
+    public void isLoaded() {
+        logger.info("Checking if " + URL + " page is loaded");
+        Navigator.checkUrl(URL);
+        validatePageElements();
+        logger.info(URL + " is loaded and validated");
+    };
+
+    public abstract void validatePageElements();
+
+    public Page open() {
+        Navigator.openUrl(URL);
+        isLoaded();
+        return this;
+    }
 }

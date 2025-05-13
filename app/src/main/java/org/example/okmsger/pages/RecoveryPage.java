@@ -1,30 +1,25 @@
 package org.example.okmsger.pages;
 
-import com.codeborne.selenide.SelenideElement;
-import static com.codeborne.selenide.Selenide.$;
+import static com.codeborne.selenide.Condition.*;
+import static com.codeborne.selenide.Selenide.*;
 
-import com.codeborne.selenide.Selenide;
+import org.example.okmsger.utils.WebElementWrapper;
+import org.openqa.selenium.By;
 
-import static com.codeborne.selenide.Selectors.*;
 
-public class RecoveryPage implements Page {
-    private final SelenideElement upperHelpButton = $(byXpath("//a[text()='Помощь' and @class='anon-tb-link']"));
-   private final String url = "https://ok.ru/dk?st.cmd=anonymRecoveryStart"; 
-
-    public boolean isHaveHelpButton() {
-        return upperHelpButton.isDisplayed();
-    }
+public class RecoveryPage extends Page {
+    private final By upperHelpButton = By.xpath("//div[@class='anon-tb-item']/a");
+    private final String URL = "https://ok.ru/dk?st.cmd=anonymRecoveryStart";
 
     public RecoveryPage clickHelpButton() {
-        upperHelpButton.click();
+        new WebElementWrapper(upperHelpButton, "upper help button").click();
         return this;
     }
 
-    public String getUrl() {
-        return url;
-    }
-    public RecoveryPage open() {
-        Selenide.open(url);
-        return this;
+    public void validatePageElements() {
+        logger.info("Validating recovery page elements");
+        $(upperHelpButton).shouldBe(visible);
+        logger.info("Help button is correct");
+        logger.info("All recovery page elements are visible");
     }
 }

@@ -1,53 +1,58 @@
 package org.example.okmsger.pages;
 
-import com.codeborne.selenide.Selenide;
-import com.codeborne.selenide.SelenideElement;
+import static com.codeborne.selenide.Condition.*;
+import static com.codeborne.selenide.Selenide.*;
 
-import static com.codeborne.selenide.Selectors.*;
-import static com.codeborne.selenide.Selenide.$;
+import org.example.okmsger.utils.WebElementWrapper;
+import org.openqa.selenium.By;
 
-public class SearchPage implements Page{
-    private final SelenideElement searchField = $(byXpath("//input[@type='search']"));
-    private final SelenideElement searchButton = $(byXpath("//button[@type='submit']"));
-    private final SelenideElement resultsCountElement = $(byXpath("//span[@class='counter__2bnlu']"));
-    private final SelenideElement firstButton = $(byXpath("//button[@aria-label='Сервисы VK']"));
-    private final SelenideElement secondButton = $(byXpath("//a[contains(@href, 'vk.company/ru/projects')]"));
-    private final String URL = "https://ok.ru/search/profiles";
-
-    public SearchPage open() {
-        Selenide.open(URL);
-        return this;
-    }
+public class SearchPage extends Page {
+    private static final By searchField = By.xpath("//input[@type='search']");
+    private static final By searchButton = By.xpath("//button[@aria-label='Найти']");
+    private static final By resultsCountElement = By.xpath("//span[@class='counter__2bnlu']");
+    private static final By firstButton = By.xpath("//button[@aria-label='Сервисы VK']");
+    private static final By secondButton = By.xpath("//a[contains(@href, 'vk.company/ru/projects')]");
+    protected static String URL = "https://ok.ru/search/profiles";
 
     public SearchPage enterSearchQuery(String query) {
-        searchField.setValue(query);
+        new WebElementWrapper(searchField,"Search input").setValue(query);
         return this;
     }
 
-    public void clickSearchButton() {
-        if (searchButton.exists()) {
-            searchButton.click();
-        } else {
-            searchField.pressEnter();
-        }
+    public SearchPage clickSearchButton() {
+        new WebElementWrapper(searchButton, "Search button").click();
+        return this;
+    }
+
+    public SearchPage submitSearchWithEnter() {
+        new WebElementWrapper(searchField, "Search input fields").pressEnter();
+        return this;
     }
 
     public int getResultsCount() {
-        String countText = resultsCountElement.getText().replaceAll("[^0-9]", "");
-        return countText.isEmpty() ? 0 : Integer.parseInt(countText);
+        return Integer.parseInt(new WebElementWrapper(resultsCountElement, "Search result count").getText());
     }
 
     public SearchPage clickFirstButton() {
-        firstButton.click();
+        new WebElementWrapper(firstButton, "first button").click();
         return this;
     }
 
     public SearchPage clickSecondButton() {
-        secondButton.click();
+        new WebElementWrapper(secondButton,"Second button").click();
         return this;
     }
 
-    public String getUrl() {
-        return URL;
+    public void validatePageElements() {
+        logger.info("Validating search page elements");
+        $(searchField).shouldBe(visible);
+        logger.info("Search field is correct");
+        $(searchButton).shouldBe(visible);
+        logger.info("Search button is correct");
+        $(firstButton).shouldBe(visible);
+        logger.info("First button is correct");
+        $(secondButton).shouldBe(hidden);
+        logger.info("Second button is correct");
+        logger.info("All search page elements are visible");
     }
 }
