@@ -1,6 +1,6 @@
 package vk.autotest.project.JunitTest;
 
-import vk.autotest.project.Note;
+import vk.autotest.project.noteData.Note;
 import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;

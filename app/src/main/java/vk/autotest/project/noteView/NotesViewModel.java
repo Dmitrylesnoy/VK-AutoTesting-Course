@@ -1,7 +1,10 @@
-package vk.autotest.project;
+package vk.autotest.project.noteView;
 
 import androidx.lifecycle.*;
 import java.util.*;
+
+import vk.autotest.project.noteData.Note;
+import vk.autotest.project.noteData.NotesRepository;
 
 public class NotesViewModel extends ViewModel {
     private final NotesRepository repository = new NotesRepository();

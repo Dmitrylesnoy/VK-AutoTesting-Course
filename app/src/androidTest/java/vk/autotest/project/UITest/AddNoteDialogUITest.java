@@ -26,19 +26,8 @@ public class AddNoteDialogUITest {
 
     @Rule
     public ActivityScenarioRule<MainActivity> activityRule = new ActivityScenarioRule<>(MainActivity.class);
-    private final CountingIdlingResource idlingResource = new CountingIdlingResource("DialogIdling");
 
-    @Before
-    public void setUp() {
-        IdlingRegistry.getInstance().register(idlingResource);
-    }
-
-    @After
-    public void tearDown() {
-        IdlingRegistry.getInstance().unregister(idlingResource);
-
-
-        // Test 1: Verify adding a note with valid input
+    // Test 1: Verify adding a note with valid input
     @Test
     public void testAddNoteWithValidInput() {
         String title = "Test Note";

@@ -4,7 +4,8 @@ import java.util.List;
 import org.junit.Test;
 import static org.junit.Assert.assertEquals;
 
-import vk.autotest.project.*;
+import vk.autotest.project.noteData.Note;
+import vk.autotest.project.noteData.NotesRepository;
 
 public class NotesRepositoryTest {
 

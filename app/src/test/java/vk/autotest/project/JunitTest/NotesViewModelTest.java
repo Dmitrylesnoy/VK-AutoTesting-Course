@@ -5,7 +5,7 @@ import org.junit.Test;
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule;
 import static org.junit.Assert.*;
 
-import vk.autotest.project.NotesViewModel;
+import vk.autotest.project.noteView.NotesViewModel;
 
 public class NotesViewModelTest {
     @Rule

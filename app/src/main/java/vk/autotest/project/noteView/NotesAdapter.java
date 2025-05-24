@@ -1,10 +1,13 @@
-package vk.autotest.project;
+package vk.autotest.project.noteView;
 
 import android.view.*;
 import android.widget.TextView;
-import androidx.annotation.NonNull;
+
 import androidx.recyclerview.widget.RecyclerView;
 import java.util.*;
+
+import vk.autotest.project.R;
+import vk.autotest.project.noteData.Note;
 
 public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.NoteViewHolder> {
     private List<Note> notes = new ArrayList<>();

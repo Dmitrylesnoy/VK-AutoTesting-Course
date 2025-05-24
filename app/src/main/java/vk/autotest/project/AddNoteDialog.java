@@ -7,6 +7,8 @@ import androidx.annotation.*;
 import androidx.fragment.app.DialogFragment;
 import androidx.lifecycle.ViewModelProvider;
 
+import vk.autotest.project.noteView.NotesViewModel;
+
 public class AddNoteDialog extends DialogFragment {
 
     @Nullable

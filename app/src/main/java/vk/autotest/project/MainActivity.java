@@ -7,6 +7,9 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import vk.autotest.project.noteView.NotesAdapter;
+import vk.autotest.project.noteView.NotesViewModel;
+
 public class MainActivity extends AppCompatActivity {
     private NotesViewModel viewModel;
     private NotesAdapter adapter;

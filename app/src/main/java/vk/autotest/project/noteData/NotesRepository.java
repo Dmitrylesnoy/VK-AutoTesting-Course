@@ -1,4 +1,4 @@
-package vk.autotest.project;
+package vk.autotest.project.noteData;
 
 import java.util.*;
 
