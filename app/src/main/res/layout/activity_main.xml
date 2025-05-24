@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".MainActivity"
-    android:backgroundTint="@color/white">
+    android:background="@color/grey"> <!-- Серый цвет фона -->
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/notesRecyclerView"
@@ -20,4 +20,3 @@
         android:layout_margin="16dp"
         android:src="@android:drawable/ic_input_add" />
 </RelativeLayout>
-

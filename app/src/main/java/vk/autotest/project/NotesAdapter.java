@@ -43,7 +43,7 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.NoteViewHold
     static class NoteViewHolder extends RecyclerView.ViewHolder {
         TextView title;
 
-        public NoteViewHolder(@NonNull View itemView) {
+        public NoteViewHolder(View itemView) {
             super(itemView);
             title = itemView.findViewById(R.id.noteTitle);
         }
