@@ -24,12 +24,15 @@ public class AddNoteDialog extends DialogFragment {
         saveButton.setOnClickListener(v -> {
             String title = titleInput.getText().toString();
             String content = contentInput.getText().toString();
-            if (!title.isEmpty()) {
+            if (title.isEmpty()) {
+                Toast.makeText(getContext(), "Заголовок не может быть пустым", Toast.LENGTH_SHORT).show();
+            } else if (title.length() > 50) {
+                Toast.makeText(getContext(), "Заголовок слишком длинный", Toast.LENGTH_SHORT).show();
+            } else {
                 viewModel.addNote(title, content);
                 dismiss();
             }
         });
-
         return view;
     }
 }

@@ -1,12 +1,10 @@
-package vk.autotest.project.UITest;
+package vk.autotest.project.UITest.frontTest;
 
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.test.ext.junit.rules.ActivityScenarioRule;
-import androidx.test.ext.junit.runners.AndroidJUnit4;
 
 import org.junit.Rule;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 
 import static androidx.test.espresso.Espresso.onView;
 import static androidx.test.espresso.action.ViewActions.click;
@@ -27,14 +25,12 @@ public class MainActivityUITest {
     public ActivityScenarioRule<MainActivity> activityRule =
             new ActivityScenarioRule<>(MainActivity.class);
 
-    // Test 1: Verify RecyclerView and FAB are displayed
     @Test
     public void testComponentsDisplayed() {
         onView(withId(R.id.notesRecyclerView)).check(matches(isDisplayed()));
         onView(withId(R.id.addNoteFab)).check(matches(isDisplayed()));
     }
 
-    // Test 2: Verify clicking FAB opens AddNoteDialog
     @Test
     public void testFabOpensDialog() {
         onView(withId(R.id.addNoteFab)).perform(click());
@@ -43,8 +39,6 @@ public class MainActivityUITest {
         onView(withId(R.id.saveButton)).check(matches(isDisplayed()));
     }
 
-
-    // Test 3: Verify RecyclerView is empty initially
     @Test
     public void testRecyclerViewEmptyInitially() {
         onView(withId(R.id.notesRecyclerView)).check((view, noViewFoundException) -> {
@@ -58,16 +52,12 @@ public class MainActivityUITest {
         String title = "Orientation Note";
         String content = "Orientation Note content";
 
-        // Add a note
         onView(withId(R.id.addNoteFab)).perform(click());
         onView(withId(R.id.editTextTitle)).perform(typeText(title));
         onView(withId(R.id.editTextContent)).perform(typeText(content));
         onView(withId(R.id.saveButton)).perform(click());
-        // Rotate screen
         activityRule.getScenario().onActivity(activity ->
                 activity.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE));
-        // Verify note persists
-//        onView(withId(R.id.notesRecyclerView)).perform(RecyclerViewActions.scrollTo(withText(title)));
         onView(withText(title)).check(matches(isDisplayed()));
     }
 }

@@ -1,11 +1,7 @@
-package vk.autotest.project.UITest;
+package vk.autotest.project.UITest.notesTest;
 
-import androidx.test.espresso.IdlingRegistry;
-import androidx.test.espresso.idling.CountingIdlingResource;
 import androidx.test.ext.junit.rules.ActivityScenarioRule;
 
-import org.junit.After;
-import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 
@@ -27,37 +23,26 @@ public class AddNoteDialogUITest {
     @Rule
     public ActivityScenarioRule<MainActivity> activityRule = new ActivityScenarioRule<>(MainActivity.class);
 
-    // Test 1: Verify adding a note with valid input
     @Test
     public void testAddNoteWithValidInput() {
         String title = "Test Note";
         String content = "This is a test note content";
 
-        // Open dialog
         onView(withId(R.id.addNoteFab)).perform(click());
-        // Enter title and content
         onView(withId(R.id.editTextTitle)).perform(typeText(title));
         onView(withId(R.id.editTextContent)).perform(typeText(content));
-        // Click save
         onView(withId(R.id.saveButton)).perform(click());
-        // Verify dialog is dismissed
         onView(withId(R.id.addNoteDialog)).check(doesNotExist());
-        // Verify note appears in RecyclerView
         onView(withText(title)).check(matches(isDisplayed()));
     }
 
-    // Test 2: Verify adding a note with empty title does not save
     @Test
     public void testAddNoteWithEmptyTitle() {
         String content = "This is a test note content";
 
-        // Open dialog
         onView(withId(R.id.addNoteFab)).perform(click());
-        // Enter content but leave title empty
         onView(withId(R.id.editTextContent)).perform(typeText(content));
-        // Click save
         onView(withId(R.id.saveButton)).perform(click());
-        // Verify dialog is not dismissed
         onView(withId(R.id.editTextContent)).check(matches(isDisplayed()));
     }
 }

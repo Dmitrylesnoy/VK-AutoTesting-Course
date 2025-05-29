@@ -18,12 +18,12 @@ public class NoteTest {
         assertEquals("Content", note.getContent());
     }
 
-//    @Test
-//    public void settersShouldUpdateFields() {
-//        Note note = new Note("1", "Old", "Text");
-//        note.setTitle("New");
-//        note.setContent("Updated");
-//        assertEquals("New", note.getTitle());
-//        assertEquals("Updated", note.getContent());
-//    }
+    @Test
+    public void settersShouldUpdateFields() {
+        Note note = new Note("1", "Old", "Text");
+        note.setTitle("New");
+        note.setContent("Updated");
+        assertEquals("New", note.getTitle());
+        assertEquals("Updated", note.getContent());
+    }
 }
