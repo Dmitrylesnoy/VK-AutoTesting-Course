@@ -1,6 +1,7 @@
 package vk.autotest.project.noteData;
+
 public class Note {
-        private String id;
+    private String id;
     private String title;
     private String content;
 
@@ -18,11 +19,7 @@ public class Note {
         this.id = id;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
-    }
+    public void setTitle(String title) {this.title = title;}
 
-    public void setContent(String content) {
-        this.content = content;
-    }
+    public void setContent(String content) {this.content = content;}
 }

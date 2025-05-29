@@ -1,6 +1,21 @@
 apply plugin: 'com.android.application'
 apply plugin: 'jacoco'
 
+dependencies {
+    // AndroidX dependencies
+    implementation 'androidx.appcompat:appcompat:1.7.0'
+    implementation 'com.google.android.material:material:1.12.0'
+    implementation 'androidx.constraintlayout:constraintlayout:2.2.1'
+    testImplementation "androidx.arch.core:core-testing:2.2.0"
+    // Espresso dependencies
+    implementation 'androidx.test.ext:junit:1.2.1'
+    implementation 'androidx.test.espresso:espresso-core:3.6.1'
+
+}
+
+jacoco {
+    toolVersion = "0.8.12"
+}
 android {
     namespace 'vk.autotest.project'
     compileSdkVersion 35
@@ -13,6 +28,10 @@ android {
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
+    }
 
     buildTypes {
         debug {
@@ -23,29 +42,24 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
-
-    buildFeatures {
-        viewBinding true
-    }
+//    testOptions {
+//        unitTests.includeAndroidResources = true
+//        unitTests.all {
+//            jacoco {
+//                includeNoLocationClasses = true
+//                excludes = ['jdk.internal.*']
+//            }
+//        }
+//    }
+//    buildFeatures {
+//        viewBinding true
+//    }
 }
 
-
-dependencies {
-    implementation libs.appcompat
-    implementation libs.material.v1110
-    implementation libs.constraintlayout.v214
-    implementation libs.espresso.idling.resource
-    implementation libs.ext.junit
-    implementation libs.espresso.core
-    testImplementation libs.ext.junit
-    testImplementation libs.espresso.core.v351
-    testImplementation libs.core.testing
+tasks.withType(Test) {
+    jacoco.includeNoLocationClasses = true
+    jacoco.excludes = ['jdk.internal.*','**/*']
 }
-
-jacoco {
-    toolVersion = "0.8.12"
-}
-
 
 task jacocoUITestReport(type: JacocoReport, dependsOn: ['connectedDebugAndroidTest']) {
     reports {
@@ -53,18 +67,14 @@ task jacocoUITestReport(type: JacocoReport, dependsOn: ['connectedDebugAndroidTe
         html.required = true
     }
 
-    def fileFilter = [
-            '**/R.class', '**/R$*.class', '**/BuildConfig.*',
-            '**/Manifest*.*', '**/*Test*.*', 'android/**/*.*'
-    ]
-
+    def fileFilter = ['**/R.class', '**/R$*.class', '**/BuildConfig.*',
+            '**/Manifest*.*', '**/*Test*.*', 'android/**/*.*']
     def debugTree = fileTree(dir: "$buildDir/intermediates/javac/debug", excludes: fileFilter)
 
     sourceDirectories.setFrom(files(["src/main/java"]))
     classDirectories.setFrom(files([debugTree]))
     executionData.setFrom(fileTree(dir: buildDir, includes: [
-            'outputs/code_coverage/debugAndroidTest/connected/Medium_Phone(AVD) - 16/coverage.ec'
-    ]))
+            'outputs/code_coverage/debugAndroidTest/connected/*/coverage.ec']))
     doLast {println "JaCoCo UI report generated"}
 }
 
@@ -74,42 +84,32 @@ task jacocoUnitTestReport(type: JacocoReport, dependsOn: ['testDebugUnitTest']) 
         html.required = true
     }
 
-    def fileFilter = [
-            '**/R.class', '**/R$*.class', '**/BuildConfig.*',
-            '**/Manifest*.*', '**/*Test*.*', 'android/**/*.*'
-    ]
+    def fileFilter = ['**/R.class', '**/R$*.class', '**/BuildConfig.*',
+            '**/Manifest*.*', '**/*Test*.*', 'android/**/*.*']
 
     def debugTree = fileTree(dir: "$buildDir/intermediates/javac/debug", excludes: fileFilter)
 
     sourceDirectories.setFrom(files(["src/main/java"]))
     classDirectories.setFrom(files([debugTree]))
     executionData.setFrom(fileTree(dir: buildDir, includes: [
-            'jacoco/testDebugUnitTest.exec',
-            'outputs/unit_test_code_coverage/debugUnitTest/testDebugUnitTest.exec'
-    ]))
-
+            'outputs/unit_test_code_coverage/debugUnitTest/testDebugUnitTest.exec']))
     doLast {println "JaCoCo UNIT report generated"}
 }
 
-task jacocoFullCoverageReport(type: JacocoReport, dependsOn: ['testDebugUnitTest', 'connectedDebugAndroidTest']) {
+
+task jacocoFullCoverageReport(type: JacocoReport,dependsOn: ['testDebugUnitTest', 'connectedDebugAndroidTest']) {
     reports {
         xml.required = true
         html.required = true
     }
-    def fileFilter = [
-            '**/R.class', '**/R$*.class', '**/BuildConfig.*',
-            '**/Manifest*.*', '**/*Test*.*', 'android/**/*.*'
-    ]
-    def debugTree = fileTree(dir: "$buildDir/intermediates/javac/debug", excludes: fileFilter)
+    def fileFilter = ['**/R.class','**/R$*.class','**/BuildConfig.*',
+            '**/Manifest*.*','**/*Test*.*','android/**/*.*','**/*$[0-9].*'    ]
+    def javaClasses = fileTree(dir: "$buildDir/intermediates/javac/debug/classes",excludes: fileFilter)
 
-    sourceDirectories.setFrom(files(["$project.projectDir/src/main/java"]))
-    classDirectories.setFrom(files([debugTree]))
-    executionData.setFrom(files([
+    classDirectories.setFrom(files([javaClasses]))
+    sourceDirectories.setFrom(files(["$project.projectDir/src/main/java",]))
+    executionData.setFrom(fileTree(dir: project.buildDir, includes: [
             'outputs/unit_test_code_coverage/debugUnitTest/testDebugUnitTest.exec',
-            'outputs/code_coverage/debugAndroidTest/connected/Medium_Phone(AVD) - 16/coverage.ec'
-    ]).filter { it.exists() })
-
-    doLast {
-        println "✔ Full coverage report generated"
-    }
+            'outputs/code_coverage/debugAndroidTest/connected/*/coverage.ec']))
+    doLast {println "Full coverage report generated DONE"}
 }

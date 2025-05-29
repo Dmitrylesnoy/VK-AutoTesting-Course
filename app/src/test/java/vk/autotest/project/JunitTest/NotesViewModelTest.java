@@ -11,11 +11,10 @@ import static org.junit.Assert.*;
 
 import vk.autotest.project.noteView.NotesViewModel;
 
-//@RunWith(AndroidJUnit4.class)
 public class NotesViewModelTest {
 //    @Rule
 //    public InstantTaskExecutorRule instantTaskExecutorRule = new InstantTaskExecutorRule();
-
+//
 //    @Test
 //    public void addNote_ShouldUpdateLiveData() {
 //        NotesViewModel vm = new NotesViewModel();
