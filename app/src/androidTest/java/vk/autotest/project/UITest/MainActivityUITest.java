@@ -35,39 +35,39 @@ public class MainActivityUITest {
     }
 
     // Test 2: Verify clicking FAB opens AddNoteDialog
-//    @Test
-//    public void testFabOpensDialog() {
-//        onView(withId(R.id.addNoteFab)).perform(click());
-//        onView(withId(R.id.editTextTitle)).check(matches(isDisplayed()));
-//        onView(withId(R.id.editTextContent)).check(matches(isDisplayed()));
-//        onView(withId(R.id.saveButton)).check(matches(isDisplayed()));
-//    }
-//
-//
-//    // Test 3: Verify RecyclerView is empty initially
-//    @Test
-//    public void testRecyclerViewEmptyInitially() {
-//        onView(withId(R.id.notesRecyclerView)).check((view, noViewFoundException) -> {
-//            if (noViewFoundException != null) throw noViewFoundException;
-//            assert ((RecyclerView) view).getAdapter().getItemCount() == 0;
-//        });
-//    }
-//
-//    @Test
-//    public void testOrientationChange() {
-//        String title = "Orientation Note";
-//        String content = "Orientation Note content";
-//
-//        // Add a note
-//        onView(withId(R.id.addNoteFab)).perform(click());
-//        onView(withId(R.id.editTextTitle)).perform(typeText(title));
-//        onView(withId(R.id.editTextContent)).perform(typeText(content));
-//        onView(withId(R.id.saveButton)).perform(click());
-//        // Rotate screen
-//        activityRule.getScenario().onActivity(activity ->
-//                activity.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE));
-//        // Verify note persists
-////        onView(withId(R.id.notesRecyclerView)).perform(RecyclerViewActions.scrollTo(withText(title)));
-//        onView(withText(title)).check(matches(isDisplayed()));
-//    }
+    @Test
+    public void testFabOpensDialog() {
+        onView(withId(R.id.addNoteFab)).perform(click());
+        onView(withId(R.id.editTextTitle)).check(matches(isDisplayed()));
+        onView(withId(R.id.editTextContent)).check(matches(isDisplayed()));
+        onView(withId(R.id.saveButton)).check(matches(isDisplayed()));
+    }
+
+
+    // Test 3: Verify RecyclerView is empty initially
+    @Test
+    public void testRecyclerViewEmptyInitially() {
+        onView(withId(R.id.notesRecyclerView)).check((view, noViewFoundException) -> {
+            if (noViewFoundException != null) throw noViewFoundException;
+            assert ((RecyclerView) view).getAdapter().getItemCount() == 0;
+        });
+    }
+
+    @Test
+    public void testOrientationChange() {
+        String title = "Orientation Note";
+        String content = "Orientation Note content";
+
+        // Add a note
+        onView(withId(R.id.addNoteFab)).perform(click());
+        onView(withId(R.id.editTextTitle)).perform(typeText(title));
+        onView(withId(R.id.editTextContent)).perform(typeText(content));
+        onView(withId(R.id.saveButton)).perform(click());
+        // Rotate screen
+        activityRule.getScenario().onActivity(activity ->
+                activity.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE));
+        // Verify note persists
+//        onView(withId(R.id.notesRecyclerView)).perform(RecyclerViewActions.scrollTo(withText(title)));
+        onView(withText(title)).check(matches(isDisplayed()));
+    }
 }

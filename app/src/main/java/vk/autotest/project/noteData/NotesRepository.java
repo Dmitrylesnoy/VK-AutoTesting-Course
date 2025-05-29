@@ -10,7 +10,13 @@ public class NotesRepository {
     }
 
     public void deleteNote(String id) {
-        notes.removeIf(note -> note.getId().equals(id));
+        Iterator<Note> iterator = notes.iterator();
+        while (iterator.hasNext()) {
+            Note note = iterator.next();
+            if (note.getId().equals(id)) {
+                iterator.remove();
+            }
+        }
     }
 
     public List<Note> getAllNotes() {

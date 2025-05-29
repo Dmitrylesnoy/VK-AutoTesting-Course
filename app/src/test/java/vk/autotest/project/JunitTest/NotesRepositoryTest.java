@@ -2,11 +2,16 @@ package vk.autotest.project.JunitTest;
 
 import java.util.List;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+
 import static org.junit.Assert.assertEquals;
+
+import androidx.test.ext.junit.runners.AndroidJUnit4;
 
 import vk.autotest.project.noteData.Note;
 import vk.autotest.project.noteData.NotesRepository;
 
+//@RunWith(AndroidJUnit4.class)
 public class NotesRepositoryTest {
 
     @Test

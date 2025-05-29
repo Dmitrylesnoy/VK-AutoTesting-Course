@@ -3,12 +3,16 @@ package vk.autotest.project.JunitTest;
 import vk.autotest.project.noteData.Note;
 import static org.junit.Assert.assertEquals;
 
-import org.junit.Test;
+import androidx.test.ext.junit.runners.AndroidJUnit4;
 
+import org.junit.Test;
+import org.junit.runner.RunWith;
+
+//@RunWith(AndroidJUnit4.class)
 public class NoteTest {
 
     @Test
-    public void constructor_ShouldSetFieldsCorrectly() {
+    public void constructorShouldSetFieldsCorrectly() {
         Note note = new Note("1", "Title", "Content");
         assertEquals("1", note.getId());
         assertEquals("Title", note.getTitle());
@@ -16,7 +20,7 @@ public class NoteTest {
     }
 
 //    @Test
-//    public void setters_ShouldUpdateFields() {
+//    public void settersShouldUpdateFields() {
 //        Note note = new Note("1", "Old", "Text");
 //        note.setTitle("New");
 //        note.setContent("Updated");

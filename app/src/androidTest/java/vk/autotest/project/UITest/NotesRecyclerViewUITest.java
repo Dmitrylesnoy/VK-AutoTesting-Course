@@ -59,23 +59,23 @@ public class NotesRecyclerViewUITest {
             onView(withText(title)).check(matches(isDisplayed()));
         }
     }
-//
-//    // Test 3: End-to-end test: Add, verify, delete
-//    @Test
-//    public void testAddAndDelete() {
-//        String title = "End-to-End Test Note";
-//        String content = "This is a test note for end-to-end";
-//
-//        // Add a note
-//        addNote(title, content);
-//        // Verify note is added
-//        onView(withText(title)).check(matches(isDisplayed()));
-//        // Delete the note
-//        onView(withText(title)).perform(longClick());
-//        // Verify note is removed
-//        onView(withText(title)).check(doesNotExist());
-//
-//    }
+
+    // Test 3: End-to-end test: Add, verify, delete
+    @Test
+    public void testAddAndDelete() {
+        String title = "End-to-End Test Note";
+        String content = "This is a test note for end-to-end";
+
+        // Add a note
+        addNote(title, content);
+        // Verify note is added
+        onView(withText(title)).check(matches(isDisplayed()));
+        // Delete the note
+        onView(withText(title)).perform(longClick());
+        // Verify note is removed
+        onView(withText(title)).check(doesNotExist());
+
+    }
 
     // Helper method to add a note
     private void addNote(String title, String content) {
