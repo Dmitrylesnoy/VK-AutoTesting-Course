@@ -35,13 +35,15 @@ public class NotesSortTest {
         for (Note note : testNotes) {
             viewModel.addNote(note.getTitle(), note.getContent());
         }
-        Logger.getGlobal().info("Bofore test notes added - passed");
+        Logger.getGlobal().info("Be  fore test notes added - passed");
     }
 
     @Test
     public void testSortByTitleAscending() {
         viewModel.setSortType(NotesViewModel.SortType.BY_TITLE);
+        Logger.getGlobal().info("Setted a By TITLE sort type");
         List<Note> sortedNotes = getNotesFromLiveData(viewModel.getNotes());
+        Logger.getGlobal().info("Getting sorted notes  list");
 
         assertEquals("Apple", sortedNotes.get(0).getTitle());
         assertEquals("Banana", sortedNotes.get(1).getTitle());
@@ -61,7 +63,7 @@ public class NotesSortTest {
     }
 
     private List<Note> getNotesFromLiveData(LiveData<List<Note>> liveData) {
-        final List<Note>[] notes = new List[1];
+        List<Note>[] notes = new List[1];
         liveData.observeForever(new Observer<List<Note>>() {
             @Override
             public void onChanged(List<Note> noteList) {

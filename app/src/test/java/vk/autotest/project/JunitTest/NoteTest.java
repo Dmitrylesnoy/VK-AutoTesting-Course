@@ -8,7 +8,7 @@ import org.junit.Test;
 import java.util.logging.Logger;
 
 public class NoteTest {
-
+    //
     @Test
     public void constructorShouldSetFieldsCorrectly() {
         Note note = new Note("1", "Title", "Content");
