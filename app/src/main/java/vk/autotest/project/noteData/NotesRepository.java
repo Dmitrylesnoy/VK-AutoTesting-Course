@@ -22,4 +22,8 @@ public class NotesRepository {
     public List<Note> getAllNotes() {
         return new ArrayList<>(notes);
     }
+
+    public int getSize(){
+        return  notes.size();
+    }
 }

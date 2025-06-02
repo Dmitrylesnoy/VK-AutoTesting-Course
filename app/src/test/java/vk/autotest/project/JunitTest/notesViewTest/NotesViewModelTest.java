@@ -15,7 +15,7 @@ public class NotesViewModelTest {
     @Rule
     public InstantTaskExecutorRule instantTaskExecutorRule = new InstantTaskExecutorRule();
 
-    @Test
+    @Test   // adding a note should be increase LiveData element size
     public void addNoteShouldUpdateLiveData() {
         NotesViewModel vm = new NotesViewModel();
         vm.addNote("Title", "Content");
@@ -23,7 +23,7 @@ public class NotesViewModelTest {
         Logger.getGlobal().info("Live data s updating - passed");
     }
 
-    @Test
+    @Test   // also deleting note from LiveData should reduce size
     public void deleteNoteShouldUpdateLiveData() {
         NotesViewModel vm = new NotesViewModel();
         vm.addNote("Title", "Content");
@@ -33,7 +33,7 @@ public class NotesViewModelTest {
         Logger.getGlobal().info("deleting is updatin LiveData - passed");
     }
 
-    @Test
+    @Test   // simple check that multiple adding works
     public void addMultipleNotesShouldAllBePresent() {
         NotesViewModel vm = new NotesViewModel();
         vm.addNote("Note 1", "Content 1");
@@ -42,7 +42,7 @@ public class NotesViewModelTest {
         Logger.getGlobal().info("Adding multiple notes work correctly - passed");
     }
 
-    @Test
+    @Test   // non-existal note should not be deleted
     public void deleteNonExistentNoteShouldNotCrash() {
         NotesViewModel vm = new NotesViewModel();
         vm.addNote("Note", "Content");

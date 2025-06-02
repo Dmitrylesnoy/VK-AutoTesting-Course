@@ -30,7 +30,7 @@ android {
         targetSdkVersion 35
         versionCode 1
         versionName "1.0"
-        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner" // runner for Android (UI instrumented) tests
     }
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_17
@@ -44,8 +44,8 @@ android {
                     'proguard-rules.pro'
         }
         debug {
-            enableUnitTestCoverage true
-            enableAndroidTestCoverage true
+            enableUnitTestCoverage true     // turn on Unit test JaCoCo coverage
+            enableAndroidTestCoverage true      // turn on Android (UI instrumented) tests coverage
         }
     }
     testOptions {
@@ -66,61 +66,70 @@ tasks.withType(Test).configureEach {
 
 // Gradle task to make a UI tests for Android app coverage
 tasks.register('jacocoUITestReport', JacocoReport) {
-    dependsOn['connectedDebugAndroidTest']
-    reports {
+    dependsOn['connectedDebugAndroidTest'] // start a task for creating report after compliting UI Test tasks
+    reports {    // setting a report file types
         xml.required = true
         html.required = true
     }
 
+    //  directory and files that shouldn't be used in coverage repott (some secondary and java system classes)
     def fileFilter = ['**/R.class', '**/R$*.class', '**/BuildConfig.*',
                       '**/Manifest*.*', '**/*Test*.*', 'android/**/*.*']
+    //  directory for compiled classes
     def debugTree = fileTree(dir: "$buildDir/intermediates/javac/debug",
-            excludes: fileFilter)
+            excludes: fileFilter)   // removing other classes
 
-    sourceDirectories.setFrom(files(["src/main/java"]))
-    classDirectories.setFrom(files([debugTree]))
-    executionData.setFrom(fileTree(dir: buildDir, includes: [
-            'outputs/code_coverage/debugAndroidTest/connected/*/coverage.ec']))
+    sourceDirectories.setFrom(files(["src/main/java"]))     // setting a original code classes source
+    classDirectories.setFrom(files([debugTree]))    // setting a dir with marked byb JaCoCo classes
+    executionData.setFrom(fileTree(dir: buildDir, includes: [   // setting file with data of Test by processing classes
+            'outputs/code_coverage/debugAndroidTest/connected/*/coverage.ec']))     // for Android instrumentd tests is .ec file
     doLast { println "JaCoCo UI report generated" }
 }
 
 // Gradle task to make a UNIT tests of clas logic coverage
 tasks.register('jacocoUnitTestReport', JacocoReport) {
-    dependsOn 'testDebugUnitTest'
-    reports {
+    dependsOn['testDebugUnitTest']  // start a task for creating report after compliting unit Test tasks
+    reports {    // setting a report file types
         xml.required = true
         html.required = true
     }
 
+    //  directory and files that shouldn't be used in coverage repott (some secondary and java system classes)
     def fileFilter = ['**/R.class', '**/R$*.class', '**/BuildConfig.*',
                       '**/Manifest*.*', '**/*Test*.*', 'android/**/*.*']
+    //  directory for compiled classes
     def debugTree = fileTree(dir: "$buildDir/intermediates/javac/debug",
-            excludes: fileFilter)
-    sourceDirectories.setFrom(files(["src/main/java"]))
-    classDirectories.setFrom(files([debugTree]))
-    executionData.setFrom(fileTree(dir: buildDir, includes: [
-            'outputs/unit_test_code_coverage/debugUnitTest/testDebugUnitTest.exec']))
+            excludes: fileFilter)   // removing other classes
+    sourceDirectories.setFrom(files(["src/main/java"]))     // setting a original code classes source
+    classDirectories.setFrom(files([debugTree]))    // setting a dir with marked byb JaCoCo classes
+    executionData.setFrom(fileTree(dir: buildDir, includes: [   // setting file with data of Test by processing classes
+            'outputs/unit_test_code_coverage/debugUnitTest/testDebugUnitTest.exec']))     // for unit tests is .exec file
     doLast { println "JaCoCo UNIT report generated" }
 }
 
 // Gradle task to megre UI and Unit tests result in one report
 tasks.register('jacocoFullCoverageReport', JacocoReport) {
+    // start a task for creating full report after compliting UI and unit Tests tasks
     dependsOn=['testDebugUnitTest', 'connectedDebugAndroidTest']
-    reports {
+    reports {   // setting a report file types
         xml.required = true
         html.required = true
     }
+
+    //  directory and files that shouldn't be used in coverage repott (some secondary and java system classes)
     def fileFilter = ['**/R.class', '**/R$*.class', '**/BuildConfig.*',
                       '**/Manifest*.*', '**/*Test*.*', 'android/**/*.*']
+    //  directory for compiled classes
     def debugTree = fileTree(
             dir: "$buildDir/intermediates/javac/debug",
-            excludes: fileFilter
+            excludes: fileFilter   // removing other classes
     )
 
-    classDirectories.setFrom(files([debugTree]))
-    sourceDirectories.setFrom(files(["$project.projectDir/src/main/java",]))
-    executionData.setFrom(fileTree(dir: project.buildDir, includes: [
-            'outputs/unit_test_code_coverage/debugUnitTest/testDebugUnitTest.exec',
-            'outputs/code_coverage/debugAndroidTest/connected/*/coverage.ec']))
+    sourceDirectories.setFrom(files(["$project.projectDir/src/main/java",]))     // setting a original code classes source
+    classDirectories.setFrom(files([debugTree]))    // setting a dir with marked byb JaCoCo classes
+    // for Full coverage report we need ro use execution test data from UI and Unit test
+    executionData.setFrom(fileTree(dir: project.buildDir, includes: [   // setting file with data of Test by processing classes
+            'outputs/unit_test_code_coverage/debugUnitTest/testDebugUnitTest.exec',     // for unit tests is .exec file
+            'outputs/code_coverage/debugAndroidTest/connected/*/coverage.ec']))     // for unit tests is .exec file
     doLast { println "Full coverage report generated DONE" }
 }

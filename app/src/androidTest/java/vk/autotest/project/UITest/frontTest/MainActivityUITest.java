@@ -16,30 +16,38 @@ import static androidx.test.espresso.matcher.ViewMatchers.withText;
 
 import android.content.pm.ActivityInfo;
 
+import java.util.logging.Logger;
+
 import vk.autotest.project.MainActivity;
 import vk.autotest.project.R;
 
 public class MainActivityUITest {
 
-    @Rule
+    @Rule   // Rule to start application activity for Test
     public ActivityScenarioRule<MainActivity> activityRule =
             new ActivityScenarioRule<>(MainActivity.class);
 
-    @Test
+    @Test   //  checking that main feed UI components are existing and displayed
     public void testComponentsDisplayed() {
         onView(withId(R.id.notesRecyclerView)).check(matches(isDisplayed()));
+        Logger.getGlobal().info("RecycleView is displayed");
         onView(withId(R.id.addNoteFab)).check(matches(isDisplayed()));
+        Logger.getGlobal().info("AddNote button is displayed");
     }
 
-    @Test
+    @Test   // checking that add note dialog has all displayed elements
     public void testFabOpensDialog() {
         onView(withId(R.id.addNoteFab)).perform(click());
+        Logger.getGlobal().info("Add note button is displayed");
         onView(withId(R.id.editTextTitle)).check(matches(isDisplayed()));
+        Logger.getGlobal().info("Note title field in adding dialog is displayed");
         onView(withId(R.id.editTextContent)).check(matches(isDisplayed()));
+        Logger.getGlobal().info("Note content field in adding dialog is displayed");
         onView(withId(R.id.saveButton)).check(matches(isDisplayed()));
+        Logger.getGlobal().info("Saving button in adding dialog is displayed");
     }
 
-    @Test
+    @Test   // checking that element for showing notes is empty from start
     public void testRecyclerViewEmptyInitially() {
         onView(withId(R.id.notesRecyclerView)).check((view, noViewFoundException) -> {
             if (noViewFoundException != null) throw noViewFoundException;
@@ -47,7 +55,7 @@ public class MainActivityUITest {
         });
     }
 
-    @Test
+    @Test   //  Testing that notes displayed shown even when turning
     public void testOrientationChange() {
         String title = "Orientation Note";
         String content = "Orientation Note content";
@@ -56,8 +64,10 @@ public class MainActivityUITest {
         onView(withId(R.id.editTextTitle)).perform(typeText(title));
         onView(withId(R.id.editTextContent)).perform(typeText(content));
         onView(withId(R.id.saveButton)).perform(click());
+        Logger.getGlobal().info("Test note added");
         activityRule.getScenario().onActivity(activity ->
                 activity.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE));
+        Logger.getGlobal().info("Screen orientation changed");
         onView(withText(title)).check(matches(isDisplayed()));
     }
 }

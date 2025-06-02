@@ -24,7 +24,7 @@ public class NotesSortTest {
     @Rule
     public InstantTaskExecutorRule instantTaskExecutorRule = new InstantTaskExecutorRule();
 
-    @Before
+    @Before     // Setting a list of Notes to work in Tests
     public void setUp() {
         viewModel = new NotesViewModel();
         List<Note> testNotes = Arrays.asList(
@@ -38,9 +38,8 @@ public class NotesSortTest {
         Logger.getGlobal().info("Be  fore test notes added - passed");
     }
 
-    @Test
+    @Test   // test to by default type
     public void testSortByTitleAscending() {
-        viewModel.setSortType(NotesViewModel.SortType.BY_TITLE);
         Logger.getGlobal().info("Setted a By TITLE sort type");
         List<Note> sortedNotes = getNotesFromLiveData(viewModel.getNotes());
         Logger.getGlobal().info("Getting sorted notes  list");
@@ -51,17 +50,18 @@ public class NotesSortTest {
         Logger.getGlobal().info("Defalut sort by TITLE test working - passed");
     }
 
-    @Test
+    @Test   // Sort test with custom sort type
     public void testSortByTitleDescending() {
         viewModel.setSortType(NotesViewModel.SortType.BY_TITLE_DESC);
         List<Note> sortedNotes = getNotesFromLiveData(viewModel.getNotes());
-
+        Logger.getGlobal().info("Setted a BY_TITLE_DESC sort type");
         assertEquals("Cherry", sortedNotes.get(0).getTitle());
         assertEquals("Banana", sortedNotes.get(1).getTitle());
         assertEquals("Apple", sortedNotes.get(2).getTitle());
         Logger.getGlobal().info("Defalut sort by TITLE_DECS test working - passed");
     }
 
+    // utility method for tests to get notes from LiveData
     private List<Note> getNotesFromLiveData(LiveData<List<Note>> liveData) {
         List<Note>[] notes = new List[1];
         liveData.observeForever(new Observer<List<Note>>() {

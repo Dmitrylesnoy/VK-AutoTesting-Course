@@ -8,8 +8,8 @@ import org.junit.Test;
 import java.util.logging.Logger;
 
 public class NoteTest {
-    //
-    @Test
+
+    @Test   // Test to know that Note create with correct params (uning getters)
     public void constructorShouldSetFieldsCorrectly() {
         Note note = new Note("1", "Title", "Content");
         assertEquals("1", note.getId());
@@ -18,7 +18,7 @@ public class NoteTest {
         Logger.getGlobal().info("Message equals test - passed");
     }
 
-    @Test
+    @Test   // Test to check that setter correctly work (using replace params with setters)
     public void settersShouldUpdateFields() {
         Note note = new Note("1", "Old", "Text");
         note.setTitle("New");

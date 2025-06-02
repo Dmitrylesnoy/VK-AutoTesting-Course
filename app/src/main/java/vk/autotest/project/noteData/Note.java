@@ -6,7 +6,6 @@ public class Note {
     private String id;
     private String title;
     private String content;
-
     private final Date createdAt;
 
     public Note(String id, String title, String content) {
