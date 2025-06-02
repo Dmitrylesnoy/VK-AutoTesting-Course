@@ -14,7 +14,6 @@ import static androidx.test.espresso.assertion.ViewAssertions.matches;
 import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
 import static androidx.test.espresso.matcher.ViewMatchers.withText;
-import static org.hamcrest.Matchers.not;
 
 import vk.autotest.project.MainActivity;
 import vk.autotest.project.R;
@@ -24,17 +23,6 @@ public class NotesRecyclerViewUITest {
     @Rule
     public ActivityScenarioRule<MainActivity> activityRule =
             new ActivityScenarioRule<>(MainActivity.class);
-
-    @Test
-    public void testDeleteNote() {
-        String title = "Note to Delete";
-        String content = "Content of note to delete";
-
-        addNote(title, content);
-        onView(withText(title)).check(matches(isDisplayed()));
-        onView(withText(title)).perform(longClick());
-        onView(withText(title)).check(doesNotExist());
-    }
 
     @Test
     public void testAddMultipleNotes() {

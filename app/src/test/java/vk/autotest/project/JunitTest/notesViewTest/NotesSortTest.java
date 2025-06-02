@@ -6,6 +6,8 @@ import org.junit.Test;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.logging.Logger;
+
 import vk.autotest.project.noteData.Note;
 import vk.autotest.project.noteView.NotesViewModel;
 import static org.junit.Assert.assertEquals;
@@ -18,7 +20,6 @@ import vk.autotest.project.MainActivity;
 
 public class NotesSortTest {
     private NotesViewModel viewModel;
-    private List<Note> testNotes;
 
     @Rule
     public InstantTaskExecutorRule instantTaskExecutorRule = new InstantTaskExecutorRule();
@@ -26,7 +27,7 @@ public class NotesSortTest {
     @Before
     public void setUp() {
         viewModel = new NotesViewModel();
-        testNotes = Arrays.asList(
+        List<Note> testNotes = Arrays.asList(
                 new Note("1", "Banana", "Content 1"),
                 new Note("2", "Apple", "Content 2"),
                 new Note("3", "Cherry", "Content 3")
@@ -34,6 +35,7 @@ public class NotesSortTest {
         for (Note note : testNotes) {
             viewModel.addNote(note.getTitle(), note.getContent());
         }
+        Logger.getGlobal().info("Bofore test notes added - passed");
     }
 
     @Test
@@ -44,6 +46,7 @@ public class NotesSortTest {
         assertEquals("Apple", sortedNotes.get(0).getTitle());
         assertEquals("Banana", sortedNotes.get(1).getTitle());
         assertEquals("Cherry", sortedNotes.get(2).getTitle());
+        Logger.getGlobal().info("Defalut sort by TITLE test working - passed");
     }
 
     @Test
@@ -54,6 +57,7 @@ public class NotesSortTest {
         assertEquals("Cherry", sortedNotes.get(0).getTitle());
         assertEquals("Banana", sortedNotes.get(1).getTitle());
         assertEquals("Apple", sortedNotes.get(2).getTitle());
+        Logger.getGlobal().info("Defalut sort by TITLE_DECS test working - passed");
     }
 
     private List<Note> getNotesFromLiveData(LiveData<List<Note>> liveData) {

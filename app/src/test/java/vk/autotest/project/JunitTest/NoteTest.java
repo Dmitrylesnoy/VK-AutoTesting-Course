@@ -3,10 +3,9 @@ package vk.autotest.project.JunitTest;
 import vk.autotest.project.noteData.Note;
 import static org.junit.Assert.assertEquals;
 
-import androidx.test.ext.junit.runners.AndroidJUnit4;
-
 import org.junit.Test;
-import org.junit.runner.RunWith;
+
+import java.util.logging.Logger;
 
 public class NoteTest {
 
@@ -16,6 +15,7 @@ public class NoteTest {
         assertEquals("1", note.getId());
         assertEquals("Title", note.getTitle());
         assertEquals("Content", note.getContent());
+        Logger.getGlobal().info("Message equals test - passed");
     }
 
     @Test
@@ -25,5 +25,6 @@ public class NoteTest {
         note.setContent("Updated");
         assertEquals("New", note.getTitle());
         assertEquals("Updated", note.getContent());
+        Logger.getGlobal().info("Setter updated fields - passed");
     }
 }

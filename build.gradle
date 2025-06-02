@@ -15,7 +15,6 @@ allprojects {
     }
 }
 
-// Enable JaCoCo globally
 subprojects {
     apply plugin: 'jacoco'
 
