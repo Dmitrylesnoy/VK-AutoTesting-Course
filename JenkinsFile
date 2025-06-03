@@ -1,0 +1,19 @@
+pipeline {
+    agent any
+    parameters {
+        string(name: 'TEST_BRANCH_NAME', defaultValue: 'code-coverage-project', description: 'Branch to build')
+    }
+    stages {
+        stage('Checkout') {
+            steps {
+                git branch: "${params.TEST_BRANCH_NAME}", 
+                     url: 'https://github.com/Dmitrylesnoy/VK-AutoTesting-Course'
+            }
+        }
+        stage('Build') {
+            steps {
+                sh './gradlew clean JaCoCoFullTestCoverage'
+            }
+        }
+    }
+}
